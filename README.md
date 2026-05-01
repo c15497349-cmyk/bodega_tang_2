@@ -1,3 +1,4 @@
+
 ## TRELLO
 mi tablero de trello
 ![TRELLO](https://github.com/emiaj0978/Bodega-Tang/blob/main/frontend/imagen/image.png)
@@ -251,4 +252,7 @@ spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
 server.port=8080
 
 ```
- 
+ <img width="1085" height="1449" alt="12ddef4b-1524-4627-a090-85c45eca94c6" src="https://github.com/user-attachments/assets/fc286d19-13e7-4855-985e-959413e4e470" />
+'''
+<img width="1528" height="980" alt="2c698ccd-8529-4a5b-bc95-243ae62c644d" src="https://github.com/user-attachments/assets/ddc4f601-e15c-4423-8561-343f4f2afeb4" />
+

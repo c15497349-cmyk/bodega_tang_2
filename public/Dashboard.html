@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Dashboard</title>
+
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+<style>
+
+body{
+  overflow-x:hidden;
+  background:#f4f6f9;
+}
+
+/* SIDEBAR */
+.sidebar{
+  width:260px;
+  height:100vh;
+  background:#111827;
+  position:fixed;
+  padding-top:20px;
+}
+
+.sidebar h3{
+  color:white;
+  text-align:center;
+  margin-bottom:30px;
+}
+
+.sidebar .nav-link{
+  color:#d1d5db;
+  padding:12px 20px;
+}
+
+.sidebar .nav-link:hover{
+  background:#1f2937;
+  color:white;
+}
+
+.content{
+  margin-left:260px;
+  padding:20px;
+}
+
+/* TARJETAS */
+.card-dashboard{
+  border:none;
+  border-radius:15px;
+  padding:25px;
+  color:white;
+}
+
+.bg1{ background:linear-gradient(135deg,#4f46e5,#7c3aed); }
+.bg2{ background:linear-gradient(135deg,#059669,#10b981); }
+.bg3{ background:linear-gradient(135deg,#dc2626,#f59e0b); }
+
+</style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+
+<h3>Bodega Tang</h3>
+
+<ul class="nav flex-column">
+
+<li class="nav-item">
+  <a class="nav-link" href="#" onclick="mostrar('inicio')">
+    <i class="bi bi-house"></i> Inicio
+  </a>
+</li>
+
+<!-- EMPLEADOS -->
+<li class="nav-item">
+
+<a class="nav-link d-flex justify-content-between align-items-center"
+data-bs-toggle="collapse"
+href="#empleadosMenu">
+
+<span>
+<i class="bi bi-people"></i> Empleados
+</span>
+
+<i class="bi bi-chevron-down"></i>
+
+</a>
+
+<div class="collapse" id="empleadosMenu">
+
+<ul class="nav flex-column ms-3">
+
+<li>
+<a class="nav-link" href="#" onclick="mostrar('reporte')">
+📊 Reporte
+</a>
+</li>
+
+<li>
+<a class="nav-link" href="#" onclick="mostrar('registro')">
+📝 Registro
+</a>
+</li>
+
+</ul>
+
+</div>
+
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="index.html">
+<i class="bi bi-box-arrow-left"></i> Salir
+</a>
+</li>
+
+</ul>
+
+</div>
+
+<!-- CONTENIDO -->
+<div class="content">
+
+<h2 class="mb-4">Dashboard Administrativo</h2>
+
+<!-- INICIO -->
+<div id="inicio" class="seccion">
+
+<div class="row">
+
+<div class="col-md-4 mb-4">
+<div class="card-dashboard bg1 shadow">
+<h5>Total Empleados</h5>
+<h1>3</h1>
+</div>
+</div>
+
+<div class="col-md-4 mb-4">
+<div class="card-dashboard bg2 shadow">
+<h5>Ventas Hoy</h5>
+<h1>S/ 100</h1>
+</div>
+</div>
+
+<div class="col-md-4 mb-4">
+<div class="card-dashboard bg3 shadow">
+<h5>Productos</h5>
+<h1>120</h1>
+</div>
+</div>
+
+</div>
+
+<!-- TABLA EN INICIO -->
+<div class="card shadow p-4">
+
+<h4 class="mb-4">Lista de Empleados</h4>
+
+<table class="table table-hover">
+
+<thead class="table-dark">
+<tr>
+<th>ID</th>
+<th>Nombre</th>
+<th>Apellido</th>
+<th>DNI</th>
+<th>Celular</th>
+<th>Correo</th>
+<th>Cargo</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>1</td>
+<td>Carlos</td>
+<td>Reategui</td>
+<td>12345678</td>
+<td>987654321</td>
+<td>carlos@gmail.com</td>
+<td>Administrador</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>Maria</td>
+<td>Lopez</td>
+<td>87654321</td>
+<td>999888777</td>
+<td>maria@gmail.com</td>
+<td>Cajera</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>Jose</td>
+<td>Perez</td>
+<td>45678912</td>
+<td>988777666</td>
+<td>jose@gmail.com</td>
+<td>Vendedor</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<!-- REPORTE -->
+<div id="reporte" class="seccion" style="display:none;">
+
+<div class="card shadow p-4">
+<h4 class="mb-4">Reporte de Empleados</h4>
+
+<table class="table table-hover">
+
+<thead class="table-dark">
+<tr>
+<th>ID</th>
+<th>Nombre</th>
+<th>Apellido</th>
+<th>DNI</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>1</td>
+<td>Carlos</td>
+<td>Reategui</td>
+<td>12345678</td>
+</tr>
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<!-- REGISTRO -->
+<div id="registro" class="seccion" style="display:none;">
+
+<div class="card shadow p-4">
+<h4 class="mb-4">Registrar Empleado</h4>
+
+<form>
+<input class="form-control mb-3" placeholder="Nombre">
+<input class="form-control mb-3" placeholder="Apellido">
+<input class="form-control mb-3" placeholder="DNI">
+<button class="btn btn-primary">Guardar</button>
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+function mostrar(id){
+  let secciones = document.querySelectorAll(".seccion");
+  secciones.forEach(sec => sec.style.display="none");
+  document.getElementById(id).style.display="block";
+}
+</script>
+
+</body>
+</html>

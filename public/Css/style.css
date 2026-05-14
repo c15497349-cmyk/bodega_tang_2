@@ -1,0 +1,18 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.hero{
+    height:100vh;
+    background:linear-gradient(135deg,#6a11cb,#2575fc);
+}
+
+.card{
+    border:none;
+    border-radius:15px;
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+}

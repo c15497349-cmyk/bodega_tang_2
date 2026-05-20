@@ -21,9 +21,7 @@
         <h2>Sistema de Asistencia</h2>
         <p>Gestiona empleados, asistencias y reportes fácilmente.</p>
 
-        <a href="/Sistema-Asistencia/login" class="btn-main">
-            Empezar ahora
-        </a>
+      
     </section>
 
     <!-- CARDS -->

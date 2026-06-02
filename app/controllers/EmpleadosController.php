@@ -4,58 +4,103 @@ require_once __DIR__ . '/../models/Empleado.php';
 
 // Controlador para el módulo de empleados.
 class EmpleadosController extends Controller {
-    // index() es el método por defecto cuando la URL no especifica acción.
-    // Ejemplo: /empleados -> EmpleadosController::index()
+
     public function index(): void {
-        // Reutilizamos la misma lógica que el reporte de empleados.
         $this->reporte();
     }
 
-    // reportes() muestra el listado completo de empleados.
-    // Ejemplo: /empleados/reportes
     public function reporte(): void {
-        // Validación de sesión: si no hay usuario logueado, redirigimos al login.
         if (!isset($_SESSION['usuario'])) {
             header("Location: " . BASE_URL . "/login");
             exit();
         }
+        $this->soloSuperAdmin();
 
         // Cargamos el modelo y obtenemos los datos de empleados.
         $modelo = new Empleado();
         $variable_empleados = $modelo->obtenerEmpleados();
 
+        require_once __DIR__ . '/../models/Cargo.php';
+        $cargo = new Cargo();
+        $variable_cargo = $cargo->obtenerCargos();
+
         // Enviamos los datos a la vista.
         $this->view('empleados/reportes', [
-            'usuario' => $_SESSION['usuario'],
-            'empleados' => $variable_empleados
+            'usuario'     => $_SESSION['usuario'],
+            'empleados'   => $variable_empleados,
+            'lista_cargo' => $variable_cargo
         ]);
     }
 
-    // reportes() es un alias de reporte() para mayor claridad en la URL.
-    // Explicación para alumnos: el Router convierte la URL /empleados/reportes
-    // en la llamada a EmpleadosController::reportes(). Al definir este alias
-    // evitamos duplicar lógica y hacemos que la URL sea más legible.
     public function reportes(): void {
-        // Reutilizamos la implementación de reporte() para mantener DRY.
         $this->reporte();
     }
 
-    // registro() muestra el formulario para crear un nuevo empleado.
-    // Ejemplo: /empleados/registro
+    public function eliminar_empleado():void{
+        require_once __DIR__ . '/../models/Empleado.php'; //llamamos al models
+        $idEmpleado = $_POST['id_empleadito'];
+        $empleado = new Empleado(); //Instanciamos la clase o objeto
+        $resultado = $empleado->eliminarPorIdEmpleado($idEmpleado); 
+        //echo "ID__" . $idEmpleado;
+        header('Content-Type: application/json');
+        if($resultado){ //Si es verdadero, ejecuta esto
+            echo json_encode(['eliminar'=>true]);
+        }else{ //Si es falso, ejectura esto
+            echo json_encode(['eliminar'=>false]);
+        }
+    } 
+
+    //EmpleadosController -> Mostrar la vista de REGISTRO+
     public function registro(): void {
+        require_once __DIR__ . '/../models/Cargo.php';
         if (!isset($_SESSION['usuario'])) {
             header("Location: " . BASE_URL . "/login");
             exit();
         }
-
+        //Instanciar el objeto del MODELO CARGO
+        $cargo = new Cargo();
+        $variable_cargo = $cargo->obtenerCargos();
+        // Enviamos los datos a la vista.
         $this->view('empleados/registro', [
-            'usuario' => $_SESSION['usuario']
+            'usuario' => $_SESSION['usuario'],
+            'lista_cargo' => $variable_cargo
         ]);
     }
 
-    // registrar() es otro alias para la misma vista de registro.
-    public function registrar(): void {
-        $this->registro();
+    public function editar_empleado(): void {
+        $datos = [
+            'id_empleado' => $_POST['id_empleado'],
+            'nombre'      => $_POST['nombre'],
+            'apellido'    => $_POST['apellido'],
+            'dni'         => $_POST['dni'],
+            'celular'     => $_POST['celular'],
+            'correo'      => $_POST['correo'],
+            'id_cargo'    => $_POST['id_cargo']
+        ];
+        $empleado = new Empleado();
+        $resultado = $empleado->editarEmpleado($datos);
+        header('Content-Type: application/json');
+        echo json_encode($resultado);
     }
 
+    public function guardar():void{
+        //Preparar o convertir los datos en array
+        $datos = [
+            'nombre'  =>  $_POST['nombre'],
+            'apellido' => $_POST['apellido'],
+            'dni' => $_POST['dni'],
+            'celular' => $_POST['celular'],
+            'correo' => $_POST['correo'],
+            'id_cargo' => $_POST['cargo']
+        ];
+        //Instanciar o crear el objeto
+        $empleado = new Empleado();
+        $resultado = $empleado->guardarEmpleados($datos);
+        if($resultado['ok'] == false){  //si es Verdadero
+            header('Location: '. BASE_URL .'/empleados/reporte');
+        }else{
+            header('Location: '. BASE_URL .'/empleados/registro');
+        }
+    }
+    
 }

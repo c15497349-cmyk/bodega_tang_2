@@ -6,6 +6,15 @@
 // Principio que aplica: DRY (Don't Repeat Yourself) — no repitas código.
 class Controller {
 
+    // Redirige al dashboard si el usuario no es superadmin.
+    // Úsalo al inicio de cualquier método que solo deba ver el superadmin.
+    protected function soloSuperAdmin(): void {
+        if (($_SESSION['usuario']['roles'] ?? '') !== 'superadmin') {
+            header('Location: ' . BASE_URL . '/dashboard');
+            exit;
+        }
+    }
+
     // Carga una vista y le pasa datos desde el controlador.
     // $vista: ruta relativa a app/views/ (ejemplo: 'auth/login')
     // $datos: array asociativo con variables que la vista puede usar

@@ -13,6 +13,7 @@ class CargosController extends Controller {
             header('Location: ' . BASE_URL . '/login');
             exit;
         }
+        $this->soloSuperAdmin();
         // Enviamos los datos a la vista.
         $this->view('cargos/reportes', [
         'usuario' => $_SESSION['usuario'],

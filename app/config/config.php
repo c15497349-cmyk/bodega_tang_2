@@ -7,7 +7,7 @@ if (file_exists($envFile)) {
     // Recorremos cada línea del archivo .env, omitiendo saltos (\n) y líneas vacías.
     foreach (file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $line) {
         // Ignoramos las líneas que son comentarios (empiezan con #)
-       if (strpos(trim($line), '#') === 0) continue;
+        if (str_starts_with(trim($line), '#')) continue;
         // Separamos la clave del valor (ej: DB_HOST=localhost)
         [$key, $value] = explode("=", $line, 2);
         $_ENV[trim($key)] = trim($value);

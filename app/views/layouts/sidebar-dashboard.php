@@ -1,7 +1,10 @@
 <!--El archivo .htacces tiene este linea RewriteRule ^(.+)$ app/index.php?url=$1 [QSA,L] -->
 <!--Detectamos en qué pagina estamos para marcar el link activo del siderbar(inicio,producto,...)-->
 <?php
-$rutaActual = explode('/', trim($_GET['url'] ?? 'dashboard', '/'))[0] ?: 'dashboard';
+$rutaActual  = explode('/', trim($_GET['url'] ?? 'dashboard', '/'))[0] ?: 'dashboard';
+$esSuperAdmin = ($_SESSION['usuario']['roles'] ?? '') === 'superadmin';
+
+
 ?>
 
 <!-- TOPBAR (solo visible en móvil) -->
@@ -32,14 +35,9 @@ $rutaActual = explode('/', trim($_GET['url'] ?? 'dashboard', '/'))[0] ?: 'dashbo
             </a>
         </li>
         <!-- ================ END DASHBOARD ================ -->
-
+        <?php if ($esSuperAdmin): ?>
+            
         <!-- ================ START EMPLEADOS ================ -->
-        <!-- 
-             - `$rutaActual` contiene el primer segmento de la URL (controlador).
-             - Si `$rutaActual === 'empleados'` añadimos la clase `dropdown show`
-               para mantener abierto el menú y `activo` para el enlace.
-                - Si no, solo añadimos `dropdown` sin `show` ni `activo`.
-        -->
         <li class="<?php echo $rutaActual === 'empleados' ? 'dropdown show' : 'dropdown'; ?>">
             <a href="#" class="dropbtn <?php echo $rutaActual === 'empleados' ? 'activo' : ''; ?>">
                 <i class="fa-solid fa-clipboard-list"></i>
@@ -76,6 +74,7 @@ $rutaActual = explode('/', trim($_GET['url'] ?? 'dashboard', '/'))[0] ?: 'dashbo
             </div>
         </li>
         <!-- ================ END CARGOS ================ -->
+        <?php endif; ?>
 
         <!-- ================ START ASISTENCIA ================ -->
         <li class="<?php echo $rutaActual === 'asistencias' ? 'dropdown show' : 'dropdown'; ?>">
@@ -85,24 +84,31 @@ $rutaActual = explode('/', trim($_GET['url'] ?? 'dashboard', '/'))[0] ?: 'dashbo
                 <i class="fa-solid fa-chevron-down arrow"></i>
             </a>
             <div class="dropdown-content">
-                <a href="<?php echo BASE_URL; ?>/asistencias"
+                <a href="<?php echo BASE_URL; ?>/asistencias/reportes"
                     class="<?php echo $rutaActual === 'asistencias' ? 'activo' : ''; ?>">
                     <i class="fa-solid fa-clock"></i>
                     Reporte
                 </a>
+                <a href="<?php echo BASE_URL; ?>/asistencias/ejemplo_hoja"
+                    class="<?php echo $rutaActual === 'asistencias/ejemplo_hoja' ? 'activo' : ''; ?>">
+                    <i class="fa-solid fa-file-alt"></i>
+                    Ejemplo Hoja
+                </a>
             </div>
+
         </li>
         <!-- ================ END ASISTENCIA ================ -->
 
-
-        <!-- ================ START USUARIOS ================ -->
-        <li>
-            <a href="<?php echo BASE_URL; ?>/usuarios" class="<?php echo $rutaActual === 'usuario' ? 'activo' : ''; ?>">
-                <i class="fa-solid fa-user-cog"></i>
-                <span>Usuarios</span>
-            </a>
-        </li>
-        <!-- ================ END USUARIOS ================ -->
+            <?php if ($esSuperAdmin): ?>
+            <!-- ================ START USUARIOS ================ -->
+            <li>
+                <a href="<?php echo BASE_URL; ?>/usuarios" class="<?php echo $rutaActual === 'usuario' ? 'activo' : ''; ?>">
+                    <i class="fa-solid fa-user-cog"></i>
+                    <span>Usuarios</span>
+                </a>
+            </li>
+            <!-- ================ END USUARIOS ================ -->
+            <?php endif; ?>
         <li class="nav-logout">
             <a href="<?php echo BASE_URL; ?>/logout" id="btn-logout">
                 <i class="fa-solid fa-right-from-bracket"></i>

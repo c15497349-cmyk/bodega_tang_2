@@ -13,6 +13,7 @@ class UsuariosController extends Controller {
             header('Location: ' . BASE_URL . '/login');
             exit;
         }
+        $this->soloSuperAdmin();
         // Enviamos los datos a la vista.
         $this->view('usuarios/reportes', [
         'usuario' => $_SESSION['usuario'],

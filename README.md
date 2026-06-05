@@ -1,6 +1,6 @@
 ## TRELLO
 mi tablero de trello
-![TRELLO](https://github.com/Bodega-Tang/blob/main/frontend/imagen/image.png)
+![TRELLO](https://github.com/emiaj0978/Bodega-Tang/blob/main/frontend/imagen/image.png)
 
 ---
 
@@ -102,10 +102,10 @@ El sistema cuenta con 4 tablas principales:
 | VENTA | Registro de ventas |
 
 ### Diagrama Entidad-Relacion (DER)
-![Diagrama Entidad Relacion](https://github.com/Bodega-Tang/blob/main/frontend/imagen/image3.png)
+![Diagrama Entidad Relacion](https://github.com/emiaj0978/Bodega-Tang/blob/main/frontend/imagen/image3.png)
  
 ### Modelo Relacional (MR)
-![Modelo Relacional](https://github.com/Bodega-Tang/blob/main/frontend/imagen/image2.png)
+![Modelo Relacional](https://github.com/emiaj0978/Bodega-Tang/blob/main/frontend/imagen/image2.png)
 
 ---
 
@@ -127,52 +127,76 @@ Un cliente puede realizar muchas compras, pero cada venta pertenece a un solo cl
 ## Modelo SQL
 
 ```sql
+
 CREATE DATABASE bodega_tang;
 USE bodega_tang;
 
-create database bodega_tang
-USE bodega_tang;
+-- =========================
+-- TABLA CARGO
+-- =========================
+CREATE TABLE cargo (
+    id_cargo INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_cargo VARCHAR(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- TABLA EMPLEADOS
-CREATE TABLE empleados (
+-- =========================
+-- TABLA EMPLEADO
+-- =========================
+CREATE TABLE empleado (
     id_empleado INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100),
-    cargo VARCHAR(100)
-);
-
--- TABLA ASISTENCIAS
-CREATE TABLE asistencias (
-    id_asistencia INT AUTO_INCREMENT PRIMARY KEY,
-    fecha DATE,
-    estado VARCHAR(50),
-    id_empleado INT,
-    FOREIGN KEY (id_empleado) REFERENCES empleados(id_empleado)
-);
-
-INSERT INTO empleados (nombre, cargo) VALUES
-('Juan Perez', 'Cajero'),
-('Maria Lopez', 'Vendedora'),
-('Carlos Reategui', 'Administrador');
-
-INSERT INTO asistencias (fecha, estado, id_empleado) VALUES
-('2026-05-01', 'Presente', 1),
-('2026-05-01', 'Tarde', 2),
-('2026-05-01', 'Falta', 3);
-
-
-
-CREATE TABLE usuarios (
-    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
-    usuario VARCHAR(50) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
-    rol VARCHAR(50) DEFAULT 'usuario',
-    estado TINYINT(1) DEFAULT 1
-);
+    apellido VARCHAR(100) NOT NULL,
+    dni VARCHAR(8) UNIQUE NOT NULL,
+    celular VARCHAR(20),
+    correo VARCHAR(100) UNIQUE NOT NULL,
+    id_cargo INT NOT NULL,
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_cargo) REFERENCES cargo(id_cargo)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO usuarios (nombre, usuario, password, rol)
-VALUES 
-('Carlos Reategui', 'admin', '1234', 'Administrador');
+-- =========================
+-- TABLA USUARIO (COMO EL PROFE)
+-- =========================
+CREATE TABLE usuario (
+    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+    roles ENUM('admin', 'superadmin') DEFAULT 'admin',
+    nombre_usuario VARCHAR(150) NOT NULL,
+    clave VARCHAR(250) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- =========================
+-- TABLA ASISTENCIA
+-- =========================
+CREATE TABLE asistencia (
+    id_asistencia INT AUTO_INCREMENT PRIMARY KEY,
+    fecha DATE NOT NULL,
+    hora_entrada TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    hora_salida TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    estado ENUM('asistio', 'tardanza', 'falto') DEFAULT 'falto',
+    id_empleado INT NOT NULL,
+    FOREIGN KEY (id_empleado) REFERENCES empleado(id_empleado) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- =========================
+-- DATOS DE PRUEBA
+-- =========================
+
+INSERT INTO cargo (nombre_cargo) VALUES
+('Administrador'),
+('Vendedor'),
+('Cajero');
+
+INSERT INTO empleado (nombre, apellido, dni, celular, correo, id_cargo) VALUES
+('Juan', 'Perez', '12345678', '987654321', 'juan@gmail.com', 1),
+('Maria', 'Lopez', '87654321', '912345678', 'maria@gmail.com', 2);
+
+INSERT INTO usuario (roles, nombre_usuario, clave) VALUES
+('admin', 'admin', '1234'),
+('superadmin', 'superadmin', '1234');
+
+INSERT INTO asistencia (fecha, estado, id_empleado) VALUES
+('2026-05-01', 'asistio', 1),
+('2026-05-01', 'tardanza', 2);
 ```
 
 ---

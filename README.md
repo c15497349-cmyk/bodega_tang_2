@@ -1,6 +1,6 @@
 ## TRELLO
 mi tablero de trello
-![TRELLO](https://github.com/Bodega-Tang/blob/main/frontend/imagen/image.png)
+![TRELLO](https://github.com/emiaj0978/Bodega-Tang/blob/main/frontend/imagen/image.png)
 
 ---
 
@@ -102,10 +102,10 @@ El sistema cuenta con 4 tablas principales:
 | VENTA | Registro de ventas |
 
 ### Diagrama Entidad-Relacion (DER)
-![Diagrama Entidad Relacion](https://github.com/Bodega-Tang/blob/main/frontend/imagen/image3.png)
+![Diagrama Entidad Relacion](https://github.com/emiaj0978/Bodega-Tang/blob/main/frontend/imagen/image3.png)
  
 ### Modelo Relacional (MR)
-![Modelo Relacional](https://github.com/Bodega-Tang/blob/main/frontend/imagen/image2.png)
+![Modelo Relacional](https://github.com/emiaj0978/Bodega-Tang/blob/main/frontend/imagen/image2.png)
 
 ---
 
@@ -130,49 +130,82 @@ Un cliente puede realizar muchas compras, pero cada venta pertenece a un solo cl
 CREATE DATABASE bodega_tang;
 USE bodega_tang;
 
-create database bodega_tang
-USE bodega_tang;
-
--- TABLA EMPLEADOS
-CREATE TABLE empleados (
-    id_empleado INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100),
-    cargo VARCHAR(100)
-);
-
--- TABLA ASISTENCIAS
-CREATE TABLE asistencias (
-    id_asistencia INT AUTO_INCREMENT PRIMARY KEY,
-    fecha DATE,
-    estado VARCHAR(50),
-    id_empleado INT,
-    FOREIGN KEY (id_empleado) REFERENCES empleados(id_empleado)
-);
-
-INSERT INTO empleados (nombre, cargo) VALUES
-('Juan Perez', 'Cajero'),
-('Maria Lopez', 'Vendedora'),
-('Carlos Reategui', 'Administrador');
-
-INSERT INTO asistencias (fecha, estado, id_empleado) VALUES
-('2026-05-01', 'Presente', 1),
-('2026-05-01', 'Tarde', 2),
-('2026-05-01', 'Falta', 3);
-
-
-
-CREATE TABLE usuarios (
-    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+-- Tabla PROVEEDOR
+CREATE TABLE proveedor (
+    id_proveedor INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
-    usuario VARCHAR(50) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
-    rol VARCHAR(50) DEFAULT 'usuario',
-    estado TINYINT(1) DEFAULT 1
+    telefono VARCHAR(15),
+    direccion VARCHAR(150)
 );
 
-INSERT INTO usuarios (nombre, usuario, password, rol)
-VALUES 
-('Carlos Reategui', 'admin', '1234', 'Administrador');
+-- Tabla PRODUCTO
+CREATE TABLE producto (
+    id_producto INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    descripcion VARCHAR(150),
+    precio DECIMAL(10,2) NOT NULL,
+    stock INT NOT NULL,
+    id_proveedor INT,
+    FOREIGN KEY (id_proveedor) REFERENCES proveedor(id_proveedor)
+);
+
+-- Tabla CLIENTE
+CREATE TABLE cliente (
+    id_cliente INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    telefono VARCHAR(15),
+    direccion VARCHAR(150)
+);
+
+-- Tabla VENTA
+CREATE TABLE venta (
+    id_venta INT AUTO_INCREMENT PRIMARY KEY,
+    fecha DATE NOT NULL,
+    id_cliente INT,
+    total DECIMAL(10,2),
+    FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente)
+);
+
+
+-- INSERT PROVEEDOR
+INSERT INTO proveedor (nombre, telefono, direccion) VALUES
+('Distribuidora Lima', '987654321', 'Av. Lima 123'),
+('Comercial Norte', '912345678', 'Jr. Amazonas 456'),
+('Importadora Perú', '998877665', 'Av. Perú 789'),
+('Mayorista Central', '976543210', 'Jr. Callao 321'),
+('Almacenes Unidos', '955443322', 'Av. Arequipa 654'),
+('Suministros SAC', '933221144', 'Jr. Piura 987'),
+('Productos del Sur', '911223344', 'Av. Tacna 159');
+
+-- INSERT PRODUCTO
+INSERT INTO producto (nombre, descripcion, precio, stock, id_proveedor) VALUES
+('Arroz 1kg', 'Arroz superior', 4.50, 100, 1),
+('Azúcar 1kg', 'Azúcar rubia', 3.80, 80, 2),
+('Leche Gloria', 'Leche evaporada', 4.20, 60, 3),
+('Aceite 1L', 'Aceite vegetal', 8.90, 50, 4),
+('Fideos', 'Fideos largos', 2.50, 120, 5),
+('Galletas', 'Galletas dulces', 1.80, 200, 6),
+('Atún', 'Atún en lata', 5.50, 70, 7);
+
+-- INSERT CLIENTE
+INSERT INTO cliente (nombre, telefono, direccion) VALUES
+('Juan Pérez', '900111222', 'Jr. Pucallpa 123'),
+('María López', '900333444', 'Av. Ucayali 456'),
+('Carlos Ruiz', '900555666', 'Jr. Iquitos 789'),
+('Ana Torres', '900777888', 'Av. Amazonas 321'),
+('Luis García', '900999000', 'Jr. Loreto 654'),
+('Sofía Mendoza', '901112233', 'Av. Perú 987'),
+('Pedro Castillo', '902223344', 'Jr. Lima 159');
+
+-- INSERT VENTA
+INSERT INTO venta (fecha, id_cliente, total) VALUES
+('2026-04-01', 1, 15.50),
+('2026-04-02', 2, 23.00),
+('2026-04-03', 3, 10.80),
+('2026-04-04', 4, 45.20),
+('2026-04-05', 5, 18.90),
+('2026-04-06', 6, 27.30),
+('2026-04-07', 7, 12.60);
 ```
 
 ---

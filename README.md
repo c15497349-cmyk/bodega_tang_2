@@ -1,6 +1,6 @@
 ## TRELLO
 mi tablero de trello
-![TRELLO](https://github.com/emiaj0978/Bodega-Tang/blob/main/frontend/imagen/image.png)
+![TRELLO](https://github.com/c15497349-cmyk/bodega_tang_2/blob/main/public/image/image.png)
 
 ---
 

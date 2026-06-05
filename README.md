@@ -127,85 +127,76 @@ Un cliente puede realizar muchas compras, pero cada venta pertenece a un solo cl
 ## Modelo SQL
 
 ```sql
+
 CREATE DATABASE bodega_tang;
 USE bodega_tang;
 
--- Tabla PROVEEDOR
-CREATE TABLE proveedor (
-    id_proveedor INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    telefono VARCHAR(15),
-    direccion VARCHAR(150)
-);
+-- =========================
+-- TABLA CARGO
+-- =========================
+CREATE TABLE cargo (
+    id_cargo INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_cargo VARCHAR(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Tabla PRODUCTO
-CREATE TABLE producto (
-    id_producto INT AUTO_INCREMENT PRIMARY KEY,
+-- =========================
+-- TABLA EMPLEADO
+-- =========================
+CREATE TABLE empleado (
+    id_empleado INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
-    descripcion VARCHAR(150),
-    precio DECIMAL(10,2) NOT NULL,
-    stock INT NOT NULL,
-    id_proveedor INT,
-    FOREIGN KEY (id_proveedor) REFERENCES proveedor(id_proveedor)
-);
+    apellido VARCHAR(100) NOT NULL,
+    dni VARCHAR(8) UNIQUE NOT NULL,
+    celular VARCHAR(20),
+    correo VARCHAR(100) UNIQUE NOT NULL,
+    id_cargo INT NOT NULL,
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_cargo) REFERENCES cargo(id_cargo)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Tabla CLIENTE
-CREATE TABLE cliente (
-    id_cliente INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    telefono VARCHAR(15),
-    direccion VARCHAR(150)
-);
+-- =========================
+-- TABLA USUARIO (COMO EL PROFE)
+-- =========================
+CREATE TABLE usuario (
+    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+    roles ENUM('admin', 'superadmin') DEFAULT 'admin',
+    nombre_usuario VARCHAR(150) NOT NULL,
+    clave VARCHAR(250) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Tabla VENTA
-CREATE TABLE venta (
-    id_venta INT AUTO_INCREMENT PRIMARY KEY,
+-- =========================
+-- TABLA ASISTENCIA
+-- =========================
+CREATE TABLE asistencia (
+    id_asistencia INT AUTO_INCREMENT PRIMARY KEY,
     fecha DATE NOT NULL,
-    id_cliente INT,
-    total DECIMAL(10,2),
-    FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente)
-);
+    hora_entrada TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    hora_salida TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    estado ENUM('asistio', 'tardanza', 'falto') DEFAULT 'falto',
+    id_empleado INT NOT NULL,
+    FOREIGN KEY (id_empleado) REFERENCES empleado(id_empleado) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- =========================
+-- DATOS DE PRUEBA
+-- =========================
 
--- INSERT PROVEEDOR
-INSERT INTO proveedor (nombre, telefono, direccion) VALUES
-('Distribuidora Lima', '987654321', 'Av. Lima 123'),
-('Comercial Norte', '912345678', 'Jr. Amazonas 456'),
-('Importadora Perú', '998877665', 'Av. Perú 789'),
-('Mayorista Central', '976543210', 'Jr. Callao 321'),
-('Almacenes Unidos', '955443322', 'Av. Arequipa 654'),
-('Suministros SAC', '933221144', 'Jr. Piura 987'),
-('Productos del Sur', '911223344', 'Av. Tacna 159');
+INSERT INTO cargo (nombre_cargo) VALUES
+('Administrador'),
+('Vendedor'),
+('Cajero');
 
--- INSERT PRODUCTO
-INSERT INTO producto (nombre, descripcion, precio, stock, id_proveedor) VALUES
-('Arroz 1kg', 'Arroz superior', 4.50, 100, 1),
-('Azúcar 1kg', 'Azúcar rubia', 3.80, 80, 2),
-('Leche Gloria', 'Leche evaporada', 4.20, 60, 3),
-('Aceite 1L', 'Aceite vegetal', 8.90, 50, 4),
-('Fideos', 'Fideos largos', 2.50, 120, 5),
-('Galletas', 'Galletas dulces', 1.80, 200, 6),
-('Atún', 'Atún en lata', 5.50, 70, 7);
+INSERT INTO empleado (nombre, apellido, dni, celular, correo, id_cargo) VALUES
+('Juan', 'Perez', '12345678', '987654321', 'juan@gmail.com', 1),
+('Maria', 'Lopez', '87654321', '912345678', 'maria@gmail.com', 2);
 
--- INSERT CLIENTE
-INSERT INTO cliente (nombre, telefono, direccion) VALUES
-('Juan Pérez', '900111222', 'Jr. Pucallpa 123'),
-('María López', '900333444', 'Av. Ucayali 456'),
-('Carlos Ruiz', '900555666', 'Jr. Iquitos 789'),
-('Ana Torres', '900777888', 'Av. Amazonas 321'),
-('Luis García', '900999000', 'Jr. Loreto 654'),
-('Sofía Mendoza', '901112233', 'Av. Perú 987'),
-('Pedro Castillo', '902223344', 'Jr. Lima 159');
+INSERT INTO usuario (roles, nombre_usuario, clave) VALUES
+('admin', 'admin', '1234'),
+('superadmin', 'superadmin', '1234');
 
--- INSERT VENTA
-INSERT INTO venta (fecha, id_cliente, total) VALUES
-('2026-04-01', 1, 15.50),
-('2026-04-02', 2, 23.00),
-('2026-04-03', 3, 10.80),
-('2026-04-04', 4, 45.20),
-('2026-04-05', 5, 18.90),
-('2026-04-06', 6, 27.30),
-('2026-04-07', 7, 12.60);
+INSERT INTO asistencia (fecha, estado, id_empleado) VALUES
+('2026-05-01', 'asistio', 1),
+('2026-05-01', 'tardanza', 2);
 ```
 
 ---

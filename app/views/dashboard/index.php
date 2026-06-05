@@ -8,17 +8,14 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/css/dashboard.css">
+
+    <!-- ✅ FALTABA ESTO -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
 
-<!-- SIDEBAR -->
 <?php include __DIR__ . '/../layouts/sidebar-dashboard.php'; ?>
-
-<!-- VIDEO DE FONDO -->
-<video class="bg-video" autoplay muted loop>
-    <source src="<?php echo BASE_URL; ?>/public/video/donde.mp4" type="video/mp4">
-</video>
 
 <!-- CONTENIDO PRINCIPAL -->
 <main>
@@ -29,13 +26,59 @@
     </nav>
 
     <div class="main-content">
-        <div class="table-responsive">
-            <!-- aquí va tu contenido -->
+
+        <!-- TARJETAS -->
+        <div class="cards">
+            <div class="card">
+                <i class="fas fa-users"></i>
+                <div>
+                    <h2>3</h2>
+                    <p>Empleados</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <i class="fas fa-check-circle"></i>
+                <div>
+                    <h2>2</h2>
+                    <p>Asistencias</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <i class="fas fa-times-circle"></i>
+                <div>
+                    <h2>1</h2>
+                    <p>Ausentes</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <i class="fas fa-clock"></i>
+                <div>
+                    <h2>1</h2>
+                    <p>Tardanzas</p>
+                </div>
+            </div>
         </div>
+
+        <!-- GRAFICOS -->
+        <div class="grid">
+            <div class="box">
+                <h3>Asistencias por semana</h3>
+                <canvas id="graficoSemana"></canvas>
+            </div>
+
+            <div class="box">
+                <h3>Resumen</h3>
+                <canvas id="graficoPorcentaje"></canvas>
+            </div>
+        </div>
+
     </div>
 </main>
 
 <script src="<?php echo BASE_URL; ?>/public/js/dashboard.js"></script>
-
 </body>
+
 </html>

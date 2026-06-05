@@ -25,7 +25,7 @@
 
         <!-- Navbar -->
         <nav class="navbar" id="navbar">
-            <a class="brand" href="#">Bodega_Tang</a>
+            <a class="brand" href="#">Bodega_tang</a>
 
             <button class="menu-btn" id="menuBtn" aria-label="Abrir menú">
                 <i class="bi bi-list"></i>

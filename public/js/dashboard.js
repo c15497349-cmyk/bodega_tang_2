@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+
     // Hamburger / Sidebar toggle (móvil) 
     const hamburger = document.querySelector(".hamburger");
     const sidebar   = document.querySelector(".sidebar");
@@ -14,17 +15,51 @@ document.addEventListener("DOMContentLoaded", () => {
         overlay.classList.remove("show");
     }
 
-    hamburger.addEventListener("click", openSidebar);
-    overlay.addEventListener("click", closeSidebar);
+    if (hamburger) hamburger.addEventListener("click", openSidebar);
+    if (overlay) overlay.addEventListener("click", closeSidebar);
 
-    //  Cerrar sesión
-    document.getElementById("btn-logout").addEventListener("click", (e) => {
-        e.preventDefault();
-        if (confirm("¿Seguro que deseas cerrar sesión?")) {
-            // Redirigimos a la URL que tiene el href del botón (/logout)
-            // El Router se encarga de destruir la sesión y mandar al login
-            window.location.href = e.currentTarget.href;
-        }
-    });
+    // Cerrar sesión
+    const btnLogout = document.getElementById("btn-logout");
+    if (btnLogout) {
+        btnLogout.addEventListener("click", (e) => {
+            e.preventDefault();
+            if (confirm("¿Seguro que deseas cerrar sesión?")) {
+                window.location.href = e.currentTarget.href;
+            }
+        });
+    }
+
+    // =========================
+    // 🔥 GRAFICO DE BARRAS
+    // =========================
+    const ctx = document.getElementById('graficoSemana');
+
+    if (ctx) {
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
+                datasets: [{
+                    data: [0,1,0,1,0,0]
+                }]
+            }
+        });
+    }
+
+    // =========================
+    // 🔥 GRAFICO CIRCULAR
+    // =========================
+    const ctx2 = document.getElementById('graficoPorcentaje');
+
+    if (ctx2) {
+        new Chart(ctx2, {
+            type: 'doughnut',
+            data: {
+                datasets: [{
+                    data: [4,96]
+                }]
+            }
+        });
+    }
 
 });

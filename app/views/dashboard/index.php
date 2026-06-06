@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/css/dashboard.css">
 
-    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -32,7 +31,7 @@
             <div class="card">
                 <i class="fas fa-users"></i>
                 <div>
-                   <h2><?= $totalEmpleados['total']; ?></h2>
+                    <h2><?= $totalEmpleados['total']; ?></h2>
                     <p>Empleados</p>
                 </div>
             </div>
@@ -78,7 +77,12 @@
     </div>
 </main>
 
-<script src="<?php echo BASE_URL; ?>/public/js/dashboard.js"></script>
-</body>
+<!-- DATOS QUE VIENEN DE PHP -->
+<script>
+const resumen = <?= json_encode($resumen); ?>;
+</script>
 
+<script src="<?php echo BASE_URL; ?>/public/js/dashboard.js"></script>
+
+</body>
 </html>

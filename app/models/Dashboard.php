@@ -33,4 +33,16 @@ class Dashboard {
             "SELECT COUNT(*) AS total FROM asistencia WHERE estado='tardanza'"
         )->fetch();
     }
+
+    public function graficoResumen() {
+
+        $sql = "SELECT estado, COUNT(*) total
+                FROM asistencia
+                GROUP BY estado";
+
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+    }
 }

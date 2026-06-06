@@ -23,6 +23,7 @@ class DashboardController extends Controller {
         $totalAsistencias = $dashboard->totalAsistencias();
         $totalAusentes = $dashboard->totalAusentes();
         $totalTardanzas = $dashboard->totalTardanzas();
+        $resumen = $dashboard->graficoResumen();
 
         // Pasamos los datos del usuario a la vista para poder mostrarlos.
         $this->view('dashboard/index', [
@@ -30,7 +31,8 @@ class DashboardController extends Controller {
             'totalEmpleados' => $totalEmpleados,
             'totalAsistencias' => $totalAsistencias,
             'totalAusentes' => $totalAusentes,
-            'totalTardanzas' => $totalTardanzas
+            'totalTardanzas' => $totalTardanzas,
+            'resumen' => $resumen
         ]);
     }
 }

@@ -46,20 +46,48 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // =========================
-    // GRAFICO CIRCULAR
-    // =========================
-    const ctx2 = document.getElementById('graficoPorcentaje');
+   // =========================
+// GRAFICO CIRCULAR
+// =========================
 
-    if (ctx2) {
-        new Chart(ctx2, {
-            type: 'doughnut',
-            data: {
-                datasets: [{
-                    data: [4,96]
-                }]
-            }
-        });
-    }
+let asistio = 0;
+let tardanza = 0;
+let falto = 0;
+
+if (typeof resumen !== "undefined") {
+
+    resumen.forEach(item => {
+
+        if(item.estado === 'asistio'){
+            asistio = parseInt(item.total);
+        }
+
+        if(item.estado === 'tardanza'){
+            tardanza = parseInt(item.total);
+        }
+
+        if(item.estado === 'falto'){
+            falto = parseInt(item.total);
+        }
+
+    });
+
+}
+
+const ctx2 = document.getElementById('graficoPorcentaje');
+
+if (ctx2) {
+
+    new Chart(ctx2, {
+        type: 'doughnut',
+        data: {
+            labels: ['Asistió','Tardanza','Faltó'],
+            datasets: [{
+                data: [asistio,tardanza,falto]
+            }]
+        }
+    });
+
+}
 
 });

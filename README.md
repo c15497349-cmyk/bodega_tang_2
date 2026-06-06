@@ -242,4 +242,8 @@ spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
 server.port=8080
 
 ```
+## Dueña usando mi sistema
+![Usando el sistema](https://github.com/c15497349-cmyk/bodega_tang_2/blob/main/public/image/due%C3%B1o.jpeg)
+```
+
  

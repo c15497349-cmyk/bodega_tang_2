@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // =========================
-    // 🔥 GRAFICO DE BARRAS
+    //  GRAFICO DE BARRAS
     // =========================
     const ctx = document.getElementById('graficoSemana');
 
@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // =========================
-    // 🔥 GRAFICO CIRCULAR
+    // GRAFICO CIRCULAR
     // =========================
     const ctx2 = document.getElementById('graficoPorcentaje');
 

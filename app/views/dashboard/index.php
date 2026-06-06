@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/css/dashboard.css">
 
-    <!-- ✅ FALTABA ESTO -->
+    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -32,7 +32,7 @@
             <div class="card">
                 <i class="fas fa-users"></i>
                 <div>
-                    <h2>3</h2>
+                   <h2><?= $totalEmpleados['total']; ?></h2>
                     <p>Empleados</p>
                 </div>
             </div>
@@ -40,7 +40,7 @@
             <div class="card">
                 <i class="fas fa-check-circle"></i>
                 <div>
-                    <h2>2</h2>
+                    <h2><?= $totalAsistencias['total']; ?></h2>
                     <p>Asistencias</p>
                 </div>
             </div>
@@ -48,7 +48,7 @@
             <div class="card">
                 <i class="fas fa-times-circle"></i>
                 <div>
-                    <h2>1</h2>
+                    <h2><?= $totalAusentes['total']; ?></h2>
                     <p>Ausentes</p>
                 </div>
             </div>
@@ -56,7 +56,7 @@
             <div class="card">
                 <i class="fas fa-clock"></i>
                 <div>
-                    <h2>1</h2>
+                    <h2><?= $totalTardanzas['total']; ?></h2>
                     <p>Tardanzas</p>
                 </div>
             </div>

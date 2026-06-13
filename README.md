@@ -320,16 +320,3 @@ Proyecto desarrollado con fines académicos para SENATI.
 GitHub:
 
 https://github.com/c15497349-cmyk/bodega_tang_2
-
-
-```
-## Dueña usando mi sistema
-
-
-
-
-![Usando el sistema](https://github.com/c15497349-cmyk/bodega_tang_2/blob/main/public/image/due%C3%B1o.jpeg)
-```
-
-
- 
